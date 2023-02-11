@@ -1,0 +1,61 @@
+
+/* Set font-size on html becaues rems refer to html element. */
+/* Set background-color on html because if unset the background-color of body floods the whole viewport. */
+html {
+  font-size: 12pt; 
+  background-color: gray;
+}
+
+/* Remaining global style settings belong more in body as its the top-most visible element. */
+body {
+
+  /* Not having one of these set introduces weird vertical padding around the body element. */
+  border-top: 10px solid transparent;
+  /* padding: 0.1px; */
+
+  width: 60rem;
+  min-height: 100vh;
+  margin: auto; /* According to mdn this is a deprecated property for aligning elements. */
+  margin-top: 0;
+  margin-bottom: 0;
+  background-color: white;
+
+  }
+
+header {
+  background-color: skyblue;
+}
+
+nav {
+  background-color: navy;
+  text-color: white;
+  font-family: sans-serif;
+  font-size: 1.5rem;
+  margin: 0;
+  padding: 0;
+}
+
+.menuButton {
+  color: white;
+}
+
+.breadcrumbs {
+  list-style-type: ">";
+}
+
+footer {
+  background-color: skyblue;
+}
+
+th {
+  font-weight: bold;
+  background-color: aliceblue;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+ul {
+  
+}

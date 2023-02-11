@@ -1,0 +1,12 @@
+Think about appropriate data types for components of a test case.
+  Right now a test case has collections of: PreConditions, PostConditions, Steps.
+  But they're all denoted by strings.
+
+  For preconditions and postconditions use maybe boolean expressions?
+    ie. Any valid javascript expression that references parts of the DOM, and resolves to a true/false value.
+
+  For steps, use a data type that has a clear correspondence in the selenium web driver API.
+
+It might make sense for Environment and Status to auto-populate their collections since, at least presently, they're just enumerations.
+  So populate Environment with: Firefox, Chrome, Edge, Safari.
+  And populate Status with: Pending, In Progress, Completed, Failed.

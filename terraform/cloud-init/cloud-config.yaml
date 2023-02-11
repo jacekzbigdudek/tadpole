@@ -1,0 +1,390 @@
+#cloud-config
+
+# Location of cloud-init log file containing any standard output emitted during initialization: 
+# /var/log/cloud-init-output.log
+
+# Location (on the VM) of cloud-init configuration files based on this cloud-config file:
+# /var/lib/cloud/instance/
+
+# Three suggestions for commands to validate cloud-config file:
+# sudo cloud-init schema --system
+# sudo cloud-init schema --config-file <path-to-config-file>
+# cloud-init devel schema --config-file <path-to-config-file>
+
+# systemd command to synch modified systemd config files:
+# systemctl daemon-reload
+
+# We might wish to personalize the VM for easier administration:
+# Import vim config file, select a nicer shell, install other useful command lines utilities, etc.
+
+packages:
+  # mongodb dependencies:
+  - libcurl4
+  - openssl
+  - liblzma5
+
+  # nodejs and puppeteer dependencies:
+  - ca-certificates
+  - fonts-liberation
+  - libappindicator3-1
+  - libasound2
+  - libatk-bridge2.0-0
+  - libatk1.0-0
+  - libc6
+  - libcairo2
+  - libcups2
+  - libdbus-1-3
+  - libexpat1
+  - libfontconfig1
+  - libgbm1
+  - libgcc1
+  - libgconf-2-4
+  - libglib2.0-0
+  - libgtk-3-0
+  - libnspr4
+  - libnss3
+  - libpango-1.0-0
+  - libpangocairo-1.0-0
+  - libstdc++6
+  - libx11-6
+  - libx11-xcb1
+  - libxcb1
+  - libxcomposite1
+  - libxcursor1
+  - libxdamage1
+  - libxext6
+  - libxfixes3
+  - libxi6
+  - libxrandr2
+  - libxrender1
+  - libxss1
+  - libxtst6
+  - lsb-release
+  - wget
+  - xdg-utils
+
+  # web server for reverse proxying:
+  - nginx
+
+write_files:  
+  # Items in this directive have an optional owner attribute, but its behaviour is buggy.
+  # Create mongodb data directory. The file is empty.
+  - path: /var/lib/mongodb/stub
+
+  # mongodb log directory and file. The file is initially empty.
+  - path: /var/log/mongodb/mongodb.log
+
+  # mongodb systemd service unit definition:
+  - path: /etc/systemd/system/mongodb.service 
+    content: |
+      [Unit]
+      Description=An object/document-oriented database
+      After=network.target
+
+      [Service]
+      User=adminuser
+      Group=adminuser
+
+      # Shouldn't this be an absolute path?:
+      RuntimeDirectory=mongodb 
+      RuntimeDirectoryMode=0755
+
+      # Denotes file in which environment variables are set.
+      # Not sure which takes precedence if Environment directives are also used.
+      EnvironmentFile=-/etc/default/mongodb 
+
+      Environment=CONF=/etc/mongodb.conf
+      Environment=SOCKETPATH=/run/mongodb
+
+      ExecStart=/usr/bin/mongod --unixSocketPrefix=${SOCKETPATH} --config ${CONF} $DAEMON_OPTS
+      # Currently we create a symbolic link from /usr/bin/mongod to actual location of the binary. 
+      Restart=on-failure
+
+      LimitFSIZE=infinity
+      LimitCPU=infinity
+      LimitAS=infinity
+      LimitNOFILE=64000
+      LimitNPROC=64000
+
+      [Install]
+      WantedBy=multi-user.target 
+
+  # mongodb configuration file: 
+  - path: /etc/mongodb.conf
+    content: |
+      storage:
+          dbPath: "/var/lib/mongodb"
+          journal:
+              enabled: true
+
+      systemLog:
+          destination: file
+          path: "/var/log/mongodb/mongodb.log"
+          logAppend: true
+
+      net:
+          bindIp: localhost
+          port: 27017
+
+  # tadpole systemd service unit definition:
+  - path: /etc/systemd/system/tadpole.service
+    content: |
+      [Unit]
+      Description=Test automation dashboard prototype.
+      After=mongodb.service
+
+      [Service]
+      ExecStart=/usr/bin/node /home/adminuser/tadpole/index.js
+      Restart=on-failure
+      Type=simple
+
+      [Install]
+      WantedBy=multi-user.target
+
+  # javascript for tadpole:
+  # Really would be simpler to import application files using a git repo...
+  - path: /home/adminuser/tadpole/index.js
+    content: |
+      const http = require('http');
+      const fs = require('fs');
+
+      const hostname = '127.0.0.1'; 
+      const port = 3456;
+
+      const server = http.createServer((req, res) => {
+        fs.readFile("./homepage.html", "UTF-8", (err, html) => {
+          res.statusCode = 200;
+          res.setHeader('Content-Type', 'text/html');
+          res.end(html);
+      })});
+
+      server.listen(port, hostname, () => {
+        console.log(`Server running at http://${hostname}:${port}/`);
+      }); 
+
+  # For now just serve a static file that will represent a snapshot of the dashboard:
+  - path: /home/adminuser/tadpole/homepage.html
+    content: |
+      <!DOCTYPE html>
+      <html lang="en-US">
+        <head>
+          <meta charset="utf-8" />
+          <meta name="viewport" content="width=device-width" />
+          <title>Tadpole</title>
+          <link rel="stylesheet" href="./styles.css" />
+        </head>
+        <body>
+          <header>
+            <img height="30" src="./images/flag-of-canada.svg"/>
+            <ul class="breadcrumbs">
+              <li><a href="#">Government of Canada</a></li>
+              <li><a href="#">Statistics Canada</a></li>
+              <li><a href="#">Informatics Branch</a></li>
+              <li><a href="#">ITPD</a></li>
+              <li><a href="#">ITTC</a></li>
+            </ul>
+            <h1>Test Automation Dashboard Prototype</h1>
+            <ul class="settings">
+              <li><a href="#">language</a></li> 
+              <li><a href="#">login</a></li>
+              <li><a href="#">settings</a></li>
+            </ul>
+          </header>
+          <nav>
+            <ul>
+              <li><a class="menuButton" href="#">Projects</a></li>
+              <li><a class="menuButton" href="#">Applications</a></li>
+              <li><a class="menuButton" href="#">Environments</a></li>
+              <li><a class="menuButton" href="#">Test Suites</a></li>
+              <li><a class="menuButton" href="#">Test Cases</a></li>
+              <li><a class="menuButton" href="#">Test Runs</a></li>
+            </ul>
+          </nav>
+          <!--
+          <div class="submenu">
+            <ul>
+              <li>Create new application</li>
+              <li>Remove application</li>
+              <li>Edit application</li>
+            </ul>
+          </div>
+          -->
+            <table>
+              <!--URL Name Version Keywords-->
+              <tr>
+                <th scope="col">URL</th>
+                <th scope="col">Name</th>
+                <th scope="col">Version</th>
+                <th scope="col">Keywords</th>
+              </tr>
+              <tr>
+                <td><a href="#">https://theguardian.com</a></td>
+                <td>The Guardian</td>
+                <td>1.0.1</td>
+                <td>news, international, reporting</td>
+              </tr>
+              <tr>
+                <td><a href="#">https://arstechnica</td>
+                <td>Ars Technica</td>
+                <td>1.0.0</td>
+                <td>news, technology, tech, computers, electronics</td>
+              </tr>
+              <tr>
+                <td><a href="#">https://statcan.gc.ca/en/start</td>
+                <td>Statistics Canada - English</td>
+                <td>1.0.0</td>
+                <td>statistics, canada, government, agency, policy, data</td>
+              </tr>
+            </table>
+        
+          <footer>
+            <ul>
+              <li><a href="#">Feedback</a></li>
+              <li><a href="#">Licenses</a></li>
+              <li><a href="#">Documentation</a></li>
+            </ul>
+            <img height="30" src="./images/flag-of-canada-alternate.svg"/>
+          </footer>
+        </body>
+      </html>
+
+  # And another file for layout and styling: 
+  - path: /home/adminuser/tadpole/styles.css
+    content: |
+      /* Set font-size on html becaues rems refer to html element. */
+      /* Set background-color on html because if unset the background-color of body floods the whole viewport. */
+      html {
+        font-size: 12pt; 
+        background-color: gray;
+      }
+
+      /* Remaining global style settings belong more in body as its the top-most visible element. */
+      body {
+        /* Not having one of these set introduces weird vertical padding around the body element. */
+        border-top: 10px solid transparent;
+        /* padding: 0.1px; */
+
+        width: 60rem;
+        min-height: 100vh;
+        margin: auto; /* According to mdn this is a deprecated property for aligning elements. */
+        margin-top: 0;
+        margin-bottom: 0;
+        background-color: white;
+        }
+
+      header {
+        background-color: skyblue;
+      }
+
+      nav {
+        background-color: navy;
+        text-color: white;
+        font-family: sans-serif;
+        font-size: 1.5rem;
+        margin: 0;
+        padding: 0;
+      }
+
+      .menuButton {
+        color: white;
+      }
+
+      .breadcrumbs {
+        list-style-type: ">";
+      }
+
+      footer {
+        background-color: skyblue;
+      }
+
+      th {
+        font-weight: bold;
+        background-color: aliceblue;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+  # nginx configuration file for tadpole. 
+  # It would be better to have these values (domain and local server address) provided as external variables.
+  - path: /etc/nginx/sites-available/itpd-tadpole.eastus.cloudapp.azure.com
+    content: |
+      server {
+        listen 80;
+        listen [::]:80;
+
+        server_name itpd-tadpole.eastus.cloudapp.azure.com www.itpd-tadpole.eastus.cloudapp.azure.com;
+
+        location / {
+          proxy_pass http://127.0.0.1:3456;
+          include proxy_params;
+        }
+      }
+
+  # Will probably need multiple files for tadpole if importing using cloud-init.
+  # Will be better to switch eventually to importing git repo from statcan github account.
+
+
+
+runcmd:
+  # Commands specified in this directive are executed sequentially.
+  # All standard output will be written to cloud-init-output.log.
+  
+  - cd /home/adminuser
+
+  # mongodb:
+  # Download tarball package of appropriate version of mongodb: 
+  - wget https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu2004-4.4.16.tgz
+
+  # Extract files from tarball, simplify directory name:
+  - tar -zxvf mongodb-linux-x86_64-ubuntu2004-4.4.16.tgz 
+  - mv mongodb-linux-x86_64-ubuntu2004-4.4.16 mongodb
+
+  # Change OS limit on number of open file descriptors per process:
+  - ulimit -n 64001
+
+  # Create a symbolic links to mongo server and shell binaries:
+  - sudo ln -s /home/adminuser/mongodb/bin/mongod /usr/bin/mongod
+  - sudo ln -s /home/adminuser/mongodb/bin/mongo /usr/bin/mongo
+
+  # Change file permissions for mongodb system user:
+  # (adminuser user and group should exist and files should be uploaded at this point.)
+  - sudo chown adminuser:adminuser /var/lib/mongodb 
+  - sudo chown adminuser:adminuser /var/log/mongodb/mongodb.log
+ 
+  # Enable mongodb.service:
+  - sudo systemctl enable mongodb.service
+
+  # nodejs:
+  # Download nodejs deb package source configuration script:
+  # We're specifying the most recent LTS version of node here.
+  # Contract this with pa11y setup where we're pulling the 14.x version. 
+  - curl -fsSL https://deb.nodesource.com/setup_lts.x -o nodesource_setup_lts.sh
+
+  # Run the script to update package sources:
+  - sudo bash nodesource_setup_lts.sh
+
+  # Install node from new source. This command is interactive. 
+  # Using -y option to respond with 'yes' to any prompts.
+  - sudo apt-get install -y nodejs
+
+  # tadpole:
+  # Use node package manager to download tadpole dependencies:
+  - cd /home/adminuser/tadpole
+  - npm install
+
+  # Enable tadpole service unit:
+  - sudo systemctl enable tadpole.service
+
+  # Create a symbolic link to nginx site config file for tadpole:
+  - sudo ln -s /etc/nginx/sites-available/itpd-tadpole.eastus.cloudapp.azure.com /etc/nginx/sites-enabled/
+
+
+# Reboot computer to start new systemd service units without race conditions.
+power_state:
+  timeout: 0
+  delay: "now"
+  message: "Rebooting to start mongodb and pa11y."
+  mode: reboot
+

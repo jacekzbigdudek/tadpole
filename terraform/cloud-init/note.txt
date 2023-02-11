@@ -1,0 +1,10 @@
+Potential approach to manage larger cloud-config.yaml files:
+  Build the yaml file and (re)place it in the same location as currently.
+    Organize sections of the cloud-init file into a project sub-directory.
+    Name each file containing a section using a systematic naming convention,
+      or prefix the contents of each file with a header with the same info.
+    Have a master file that specifies
+      order and dependency restrictions on sections,
+      and currently chosen build options.
+    Have a pair of bash, powershell scripts that concatenate the various
+      sections, guided by the master file, and build a new cloud-init file.
