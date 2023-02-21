@@ -18,6 +18,9 @@
 # Import vim config file, select a nicer shell, install other useful command lines utilities, etc.
 
 packages:
+  # web server for reverse proxy:
+  - nginx
+  
   # mongodb dependencies:
   - libcurl4
   - openssl
@@ -63,10 +66,10 @@ packages:
   - wget
   - xdg-utils
 
-  # web server for reverse proxying:
-  - nginx
 
 write_files:  
+  # * We'll be replacing all the write file directives with a git clone command. *
+
   # Items in this directive have an optional owner attribute, but its behaviour is buggy.
   # Create mongodb data directory. The file is empty.
   - path: /var/lib/mongodb/stub
@@ -134,177 +137,13 @@ write_files:
       After=mongodb.service
 
       [Service]
-      ExecStart=/usr/bin/node /home/adminuser/tadpole/index.js
+      # ExecStart=/usr/bin/node /home/adminuser/tadpole/index.js
+      ExecStart=/usr/bin/npm start
       Restart=on-failure
       Type=simple
 
       [Install]
       WantedBy=multi-user.target
-
-  # javascript for tadpole:
-  # Really would be simpler to import application files using a git repo...
-  - path: /home/adminuser/tadpole/index.js
-    content: |
-      const http = require('http');
-      const fs = require('fs');
-
-      const hostname = '127.0.0.1'; 
-      const port = 3456;
-
-      const server = http.createServer((req, res) => {
-        fs.readFile("./homepage.html", "UTF-8", (err, html) => {
-          res.statusCode = 200;
-          res.setHeader('Content-Type', 'text/html');
-          res.end(html);
-      })});
-
-      server.listen(port, hostname, () => {
-        console.log(`Server running at http://${hostname}:${port}/`);
-      }); 
-
-  # For now just serve a static file that will represent a snapshot of the dashboard:
-  - path: /home/adminuser/tadpole/homepage.html
-    content: |
-      <!DOCTYPE html>
-      <html lang="en-US">
-        <head>
-          <meta charset="utf-8" />
-          <meta name="viewport" content="width=device-width" />
-          <title>Tadpole</title>
-          <link rel="stylesheet" href="./styles.css" />
-        </head>
-        <body>
-          <header>
-            <img height="30" src="./images/flag-of-canada.svg"/>
-            <ul class="breadcrumbs">
-              <li><a href="#">Government of Canada</a></li>
-              <li><a href="#">Statistics Canada</a></li>
-              <li><a href="#">Informatics Branch</a></li>
-              <li><a href="#">ITPD</a></li>
-              <li><a href="#">ITTC</a></li>
-            </ul>
-            <h1>Test Automation Dashboard Prototype</h1>
-            <ul class="settings">
-              <li><a href="#">language</a></li> 
-              <li><a href="#">login</a></li>
-              <li><a href="#">settings</a></li>
-            </ul>
-          </header>
-          <nav>
-            <ul>
-              <li><a class="menuButton" href="#">Projects</a></li>
-              <li><a class="menuButton" href="#">Applications</a></li>
-              <li><a class="menuButton" href="#">Environments</a></li>
-              <li><a class="menuButton" href="#">Test Suites</a></li>
-              <li><a class="menuButton" href="#">Test Cases</a></li>
-              <li><a class="menuButton" href="#">Test Runs</a></li>
-            </ul>
-          </nav>
-          <!--
-          <div class="submenu">
-            <ul>
-              <li>Create new application</li>
-              <li>Remove application</li>
-              <li>Edit application</li>
-            </ul>
-          </div>
-          -->
-            <table>
-              <!--URL Name Version Keywords-->
-              <tr>
-                <th scope="col">URL</th>
-                <th scope="col">Name</th>
-                <th scope="col">Version</th>
-                <th scope="col">Keywords</th>
-              </tr>
-              <tr>
-                <td><a href="#">https://theguardian.com</a></td>
-                <td>The Guardian</td>
-                <td>1.0.1</td>
-                <td>news, international, reporting</td>
-              </tr>
-              <tr>
-                <td><a href="#">https://arstechnica</td>
-                <td>Ars Technica</td>
-                <td>1.0.0</td>
-                <td>news, technology, tech, computers, electronics</td>
-              </tr>
-              <tr>
-                <td><a href="#">https://statcan.gc.ca/en/start</td>
-                <td>Statistics Canada - English</td>
-                <td>1.0.0</td>
-                <td>statistics, canada, government, agency, policy, data</td>
-              </tr>
-            </table>
-        
-          <footer>
-            <ul>
-              <li><a href="#">Feedback</a></li>
-              <li><a href="#">Licenses</a></li>
-              <li><a href="#">Documentation</a></li>
-            </ul>
-            <img height="30" src="./images/flag-of-canada-alternate.svg"/>
-          </footer>
-        </body>
-      </html>
-
-  # And another file for layout and styling: 
-  - path: /home/adminuser/tadpole/styles.css
-    content: |
-      /* Set font-size on html becaues rems refer to html element. */
-      /* Set background-color on html because if unset the background-color of body floods the whole viewport. */
-      html {
-        font-size: 12pt; 
-        background-color: gray;
-      }
-
-      /* Remaining global style settings belong more in body as its the top-most visible element. */
-      body {
-        /* Not having one of these set introduces weird vertical padding around the body element. */
-        border-top: 10px solid transparent;
-        /* padding: 0.1px; */
-
-        width: 60rem;
-        min-height: 100vh;
-        margin: auto; /* According to mdn this is a deprecated property for aligning elements. */
-        margin-top: 0;
-        margin-bottom: 0;
-        background-color: white;
-        }
-
-      header {
-        background-color: skyblue;
-      }
-
-      nav {
-        background-color: navy;
-        text-color: white;
-        font-family: sans-serif;
-        font-size: 1.5rem;
-        margin: 0;
-        padding: 0;
-      }
-
-      .menuButton {
-        color: white;
-      }
-
-      .breadcrumbs {
-        list-style-type: ">";
-      }
-
-      footer {
-        background-color: skyblue;
-      }
-
-      th {
-        font-weight: bold;
-        background-color: aliceblue;
-      }
-
-      h1 {
-        font-size: 2rem;
-      }
 
   # nginx configuration file for tadpole. 
   # It would be better to have these values (domain and local server address) provided as external variables.
@@ -321,11 +160,6 @@ write_files:
           include proxy_params;
         }
       }
-
-  # Will probably need multiple files for tadpole if importing using cloud-init.
-  # Will be better to switch eventually to importing git repo from statcan github account.
-
-
 
 runcmd:
   # Commands specified in this directive are executed sequentially.
@@ -370,9 +204,14 @@ runcmd:
   - sudo apt-get install -y nodejs
 
   # tadpole:
-  # Use node package manager to download tadpole dependencies:
-  - cd /home/adminuser/tadpole
-  - npm install
+  - cd /home/adminuser/
+
+  # Get all our project files by importing the repo:
+  - git clone https://github.com/jacekzbigdudek/tadpole.git
+ 
+  - cd /home/adminuser/tadpole/express/
+  # Import the required node packages:
+  - npm ci
 
   # Enable tadpole service unit:
   - sudo systemctl enable tadpole.service

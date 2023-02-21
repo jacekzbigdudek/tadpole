@@ -1,0 +1,11 @@
+Explore other options for persistent storage (other than mongo and mongoose).
+  Just use node's filesystem api.
+    tadpole/
+      applications/
+        <some-filename-convention-for-application-instance>
+        ...
+      testCases/
+      testSuites/
+      testRuns/
+  Open source relational databases: postgres, mysql, sqlite, ...
+  

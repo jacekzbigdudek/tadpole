@@ -1,0 +1,151 @@
+html {
+  /* Set font-size on html becaues rems (root ems) refer to html element. */
+  font-size: 12pt; 
+  /* Set background-color on html because if unset the background-color of body floods the whole viewport. */
+  background-color: gray;
+  /* Use grid layout model to center body in viewport. */
+  display: flex;
+  /* I think this is the modern way to center content in parent elements set to grid or flex layout. */
+  justify-content: center;
+}
+
+/* Remaining global style settings belong more in body as its the top-most visible element. */
+body {
+  margin: 0;
+  width: 60rem;
+  min-height: 100vh;
+  background-color: white;
+  
+  display: block grid;
+  grid-template-rows: 6rem 2.5rem 1fr 3rem;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "header"
+    "nav"
+    "main"
+    "footer";
+  gap: 0px;
+
+}
+
+header {
+  background-color: lightsteelblue;
+  display: block grid;
+  grid-area: header;
+  /*height: 6rem;*/
+  grid-template-rows: 1fr 2fr;
+  grid-template-columns: 3fr 2fr;
+  grid-template-areas:
+    "breadCrumbs userSettings"
+    "title       .           ";
+
+  border: thin solid green;
+}
+
+#breadCrumbs {
+  list-style-type: none;
+  grid-area: breadCrumbs;
+  display: flex;
+  align-content: center;
+  font-size: 1.2rem;
+  /*height: 2.4rem;*/
+  margin: 0.5rem;
+  border: thin solid red;
+
+}
+
+.breadCrumb {
+  text-align: center;
+  font-size: 1rem;
+  height: 2.2rem;
+  max-width: 85px;
+  border: thin solid orange;
+}
+
+.chevron {
+  height: 1.8rem;
+}
+
+#userSettings {
+  margin: 0.5rem;
+  display: block grid;
+  grid-area: userSettings;
+  align-content: center;
+  border: thin solid green;
+}
+
+.userSetting {
+  height: 2rem;
+  border: thin solid red;
+}
+
+#title {
+  font-size: 2rem;
+  margin: 0.5rem;
+  grid-area: title;
+  border: 1px solid purple;
+  background-color: pink;
+
+}
+                                              
+nav {
+  background-color: navy;
+  text-color: white;
+  margin: 0;
+  padding: 0;
+  grid-area: nav;
+  font-family: sans-serif;
+  font-size: 1.5rem;
+  
+  display: block grid;
+  grid-template-columns: repeat(6, 1fr);
+  justify-content: center;              
+
+  /* Layout idea: use responsive text size so that menu items (all together) fill out whole width. */
+}
+
+main {
+  background-color: white;
+  grid-area: main;
+
+}
+
+footer {
+  background-color: lightsteelblue;
+  font-size: 1.20rem;
+  padding: 10px;
+  display: block grid;
+  grid-area: footer;
+  gap: 20px;
+
+  justify-content: center;
+  align-content: center;
+}
+
+
+th {
+  font-weight: bold;
+  background-color: skyblue;
+}
+
+a {
+}
+
+.menuButton {
+  color: white;
+}
+
+#followUp {
+  border: thin solid red;
+}
+
+#foc1 {
+  height: 2.4rem;
+}
+
+#foc2 {
+  height: 2.4rem;
+}
+
+
+

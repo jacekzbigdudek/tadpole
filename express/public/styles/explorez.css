@@ -1,0 +1,92 @@
+html {
+  background: gray;
+  font-size: 32px;
+}
+
+body {
+  /*
+  background: white;
+  display: block grid;
+  grid-template-areas:
+    "header"
+    "nav"
+    "main";
+  grid-template-rows: auto;
+  grid-template-columns: minmax(auto, 80rem);
+  */
+}
+
+header {
+  margin: 0;
+  display: block grid;
+  grid-template-areas:
+    "breadCrumbs  userSettings"
+    "title        .           ";
+  grid-template-rows: auto auto;
+  grid-template-columns: auto auto;
+  padding: 0.5rem;
+  gap: 0.5rem;
+  grid-area: header;
+  justify-content: center;
+}
+
+#breadCrumbs {
+  margin: 0;
+  padding: 0;
+  display: block flow;
+  /*line-height: 36px;*/
+  padding: 0;
+
+  background-color: lightsteelblue;
+  /*grid-area: header;*/
+}
+
+#title {
+  margin: 0;
+  font-size: 4rem;
+  background-color: pink;
+  grid-area: title;
+}
+
+#userSettings {
+  margin: 0;
+  font-size: 1rem;
+  background-color: lime-green;
+  grid-area: userSettings;
+}
+
+.breadCrumb {
+  /*height: 2rem;*/
+  line-height: 1;
+  font-size: 1rem;
+  background-color: pink;
+}
+
+.parentOf{
+  height: 32px;
+  background-color: pink;
+}
+
+#foc1 {
+  /*border: thin yellow solid;*/
+  display: inline block;
+  vertical-align: sub;
+  height: 2rem;
+}
+
+a {
+  margin: 0;
+  padding: 0;
+}
+
+#outer1 {
+  background-color: purple;
+}
+
+#outer2 {
+  background-color: green;
+}
+
+#test {
+  background-color: lime;
+}

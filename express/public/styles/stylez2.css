@@ -1,0 +1,145 @@
+html {
+  /* Set font-size on html becaues rems refer to html element. */
+  font-size: 12pt; 
+  /* Set background-color on html because if unset the background-color of body floods the whole viewport. */
+  background-color: gray;
+  /* Use grid layout model to center body in viewport. */
+  display: grid;
+  /* I think this is the modern way to center content in parent elements set to grid or flex layout. */
+  justify-content: center;
+}
+
+/* Remaining global style settings belong more in body as its the top-most visible element. */
+body {
+  margin: 0;
+  display: block grid;
+  grid-template-rows: 6rem 2.5rem 1fr 5rem;
+  gap: 5px;
+  width: 60rem;
+  min-height: 100vh;
+  background-color: white;
+}
+
+header {
+  background-color: lightsteelblue;
+  display: block grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 4fr 40px 1fr;
+  padding: 0px;
+  grid-row-start: 1;
+  grid-row-end: 1;
+  border: thin solid green;
+}
+
+#breadcrumbTrail {
+  list-style-type: none;
+  display: flex;
+  align-content: center;
+  font-size: 1.2rem;
+  height: 2.4rem;
+  margin: 0;
+  grid-row-start: 1;
+  grid-column-start: 1;
+  border: thin solid red;
+  background-color: beige;
+}
+
+.breadcrumb {
+  text-align: center;
+  font-size: 1rem;
+  height: 2.2rem;
+  max-width: 85px;
+  border: thin solid orange;
+}
+
+.chevron {
+  height: 1.8rem;
+}
+
+#userSettings {
+  overflow: hidden;
+  display: block grid;
+  grid-column-start: 3;
+  grid-column-end: 3;
+  grid-row-start: 1;
+  grid-row-end: 3;
+  align-content: center;
+  justify-content: center;
+  border: thin solid green;
+  background-color: lightgreen;
+}
+
+.userSetting {
+  height: 50px;
+  border: thin solid red;
+  background-color: magenta;
+}
+
+#myTitle {
+  font-size: 2rem;
+  grid-row-start: 2;
+  grid-row-end: 2;
+  grid-column-start: 1;
+  grid-column-end: 1;
+  border: 1px solid purple;
+  background-color: pink;
+  margin: 0;
+}
+                                              
+nav {
+  background-color: navy;
+  text-color: white;
+  font-family: sans-serif;
+  font-size: 1.5rem;
+  margin: 0;
+  padding: 0;
+  grid-row-start: 2;
+  grid-row-end: 2;
+  display: block grid;
+  grid-template-columns: repeat(6, 1fr);
+  justify-content: center;
+  /*Layout idea: use responsive text size so that menu items fill out whole width together.*/
+}
+
+main {
+  background-color: transparent;
+  grid-row-start: 3;
+  grid-row-end: 3;
+}
+
+footer {
+  background-color: lightsteelblue;
+  font-size: 1.20rem;
+  display: flex;
+  justify-content: right;
+  align-content: center;
+  padding: 10px;
+  gap: 20px;
+  grid-row-start: 4;
+  grid-row-end: 4;
+}
+
+th {
+  font-weight: bold;
+  background-color: skyblue;
+}
+
+.menuButton {
+  color: white;
+}
+
+#followUp {
+  border: thin solid red;
+}
+
+#foc1 {
+  height: 2.4rem;
+}
+
+#foc2 {
+  height: 2.4rem;
+}
+
+
+
+
