@@ -100,8 +100,6 @@ nav {
   display: block grid;
   grid-template-columns: repeat(6, 1fr);
   justify-content: center;              
-
-  /* Layout idea: use responsive text size so that menu items (all together) fill out whole width. */
 }
 
 main {
@@ -140,7 +138,7 @@ a {
 }
 
 #foc1 {
-  height: 2.4rem;
+  height: calc(2.4rem + 4px);
 }
 
 #foc2 {
