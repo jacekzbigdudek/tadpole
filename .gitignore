@@ -4,5 +4,5 @@
 /terraform/*.tfstate.backup                  
 /ssh-keys/*
 /notes.txt
-/.notes.txt.swp
+*.swp
 /express/node_modules

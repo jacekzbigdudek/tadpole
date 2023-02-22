@@ -35,7 +35,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // The filesystem path specified in the argument to static will get mapped
-// to a path (root by default I assume) on the browser.
+// to the root path on the browser.
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Import route handlers:

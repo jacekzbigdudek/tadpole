@@ -155,7 +155,7 @@ write_files:
         server_name itpd-tadpole.eastus.cloudapp.azure.com www.itpd-tadpole.eastus.cloudapp.azure.com;
 
         location / {
-          proxy_pass http://127.0.0.1:3456;
+          proxy_pass http://127.0.0.1:3000;
           include proxy_params;
         }
       }
