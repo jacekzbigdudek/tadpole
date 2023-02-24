@@ -1,96 +1,102 @@
 html {
-  /* Set font-size on html becaues rems (root ems) refer to html element. */
+  /* Set font-size on html becaues rems (root ems) 
+  refer to root element (html). */
   font-size: 12pt; 
-  /* Set background-color on html because if unset the background-color of body floods the whole viewport. */
+  /* Set background-color on html because if unset the 
+  background-color of body floods the whole viewport. */
   background-color: gray;
-  /* Use grid layout model to center body in viewport. */
-  display: flex;
-  /* I think this is the modern way to center content in parent elements set to grid or flex layout. */
+  display: grid;
+  grid-template-rows: min-content;
+  grid-template-columns: min-content;
+  grid-template-areas: "body";
   justify-content: center;
+  align-content: center;
 }
 
-/* Remaining global style settings belong more in body as its the top-most visible element. */
+/* Remaining global style settings belong more 
+in body as it is the top-most visible element. */
 body {
-  margin: 0;
-  width: 60rem;
   min-height: 100vh;
-  background-color: white;
-  
+  margin: 0;
+  background-color: navy;
+  grid-area: body;
   display: block grid;
-  grid-template-rows: 6rem 2.5rem 1fr 3rem;
-  grid-template-columns: 1fr;
+  grid-template-rows: min-content min-content 1fr min-content;
+  grid-template-columns: auto;
   grid-template-areas:
     "header"
     "nav"
     "main"
     "footer";
-  gap: 0px;
-
+  gap: 0.5rem;
 }
 
 header {
-  background-color: lightsteelblue;
+  background-color: aliceblue;
   display: block grid;
   grid-area: header;
-  /*height: 6rem;*/
-  grid-template-rows: 1fr 2fr;
-  grid-template-columns: 3fr 2fr;
+  grid-template-rows: min-content min-content;
+  /*grid-template-columns: 4rem minmax(2rem, 1fr) 2rem min-content;*/
+  grid-template-columns: 4rem auto 2.5rem auto;
   grid-template-areas:
-    "breadCrumbs userSettings"
-    "title       .           ";
+    "logo  breadCrumbs separator userSettings"
+    "title title       separator userSettings";
+  padding: 0.5rem;
+}
 
-  border: thin solid green;
+#foc {
+  height: 2rem;
+  grid-area: logo;
+  margin: 0;
+}
+
+#title {
+  font-size: 2rem;
+  margin: 0;
+  grid-area: title;
+  /*border: 1px solid purple;*/
+  /*background-color: pink;*/
+  /* This property prevents wrapping of text in our title: */
+  white-space: nowrap;
 }
 
 #breadCrumbs {
-  list-style-type: none;
   grid-area: breadCrumbs;
-  display: flex;
+  display: flow;
   align-content: center;
   font-size: 1.2rem;
-  /*height: 2.4rem;*/
-  margin: 0.5rem;
-  border: thin solid red;
-
+  margin-left: 0.5rem;
+  white-space: nowrap;
 }
 
 .breadCrumb {
   text-align: center;
   font-size: 1rem;
-  height: 2.2rem;
-  max-width: 85px;
-  border: thin solid orange;
-}
-
-.chevron {
-  height: 1.8rem;
 }
 
 #userSettings {
-  margin: 0.5rem;
+  margin: 0;
   display: block grid;
+  grid-template-rows: min-content min-content;
+  grid-template-columns: min-content min-content;
+  grid-template-areas:
+    "language login"
+    "layout   colors";
   grid-area: userSettings;
-  align-content: center;
-  border: thin solid green;
+  gap: 0.5rem;
 }
 
 .userSetting {
-  height: 2rem;
-  border: thin solid red;
-}
-
-#title {
-  font-size: 2rem;
-  margin: 0.5rem;
-  grid-area: title;
-  border: 1px solid purple;
-  background-color: pink;
+  font-family: inherit;
+  font: 1rem sans-serif;
+  background-color: lightsteelblue;
+  border-radius: 0.25rem;
 
 }
                                               
 nav {
   background-color: navy;
-  text-color: white;
+  color: white;
   margin: 0;
   padding: 0;
   grid-area: nav;
@@ -98,52 +104,84 @@ nav {
   font-size: 1.5rem;
   
   display: block grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: min-content;
+  grid-template-columns: min-content 1fr min-content 1fr min-content 1fr min-content 1fr min-content 1fr min-content;
+  grid-template-areas:
+    "projects . applications . environments . testSuites . testCases . testRuns";
   justify-content: center;              
+  white-space: nowrap;
 }
+
+.navItem {
+  background-color: lightsteelblue;
+  border-radius: 0.1rem;
+  font-family: sans-serif;
+  font-size: 1.35rem;
+}
+
+#viewProjects {
+  grid-area: projects;
+}
+
+#viewApplications {
+  grid-area: applications;
+}
+
+#viewEnvironments {
+  grid-area: environments;
+}
+
+#viewTestSuites {
+  grid-area: testSuites;
+}
+
+#viewTestCases {
+  grid-area: testCases;
+}
+
+#viewTestRuns {
+  grid-area: testRuns;
+}
+
 
 main {
-  background-color: white;
+  background-color: aliceblue;
   grid-area: main;
-
 }
-
-footer {
-  background-color: lightsteelblue;
-  font-size: 1.20rem;
-  padding: 10px;
-  display: block grid;
-  grid-area: footer;
-  gap: 20px;
-
-  justify-content: center;
-  align-content: center;
-}
-
 
 th {
   font-weight: bold;
   background-color: skyblue;
 }
 
-a {
-}
-
 .menuButton {
   color: white;
 }
 
-#followUp {
-  border: thin solid red;
+footer {
+  background-color: aliceblue;
+  padding: 0.5rem;
+  display: block grid;
+  grid-area: footer;
+  grid-template-rows: min-content;
+  grid-template-columns: min-content minmax(2rem, 1fr) min-content;
+  grid-template-areas:
+    "followUps seperator logo";
 }
 
-#foc1 {
-  height: calc(2.4rem + 4px);
+#followUps {
+  display: block flex;
+  grid-area: followUps;
+  justify-self: start;
+  font-size: 1.2rem;
 }
 
-#foc2 {
-  height: 2.4rem;
+.followUp {
+  margin: 0.5rem;
 }
 
-
+#foc-alt {
+  height: 2rem;
+  grid-area: logo;
+}
 

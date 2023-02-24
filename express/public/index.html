@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Tadpole</title>
+    <link rel="stylesheet" href="./styles/default.css" />
+    <script src="./scripts/navButtons.js"></script>
+  </head>
+  <body>
+    <header>
+      <img alt="Flag of Canada" id="foc" src="./images/flag-of-canada.svg"/>
+      <div id="breadCrumbs">
+        <!--a class="breadCrumb" href="#">Government of Canada</a-->
+        <a class="breadCrumb" href="#">Statistics Canada</a>
+        <a class="breadCrumb" href="#">Informatics Branch</a>
+        <a class="breadCrumb" href="#">ITPD</a>
+        <a class="breadCrumb" href="#">ITTC</a>
+      </div>
+      <h1 id="title">Test Automation Dashboard Prototype</h1>
+      <div id="userSettings">
+        <button type="button" class="userSetting">Login</button>
+        <button type="button" class="userSetting">Language</button>
+        <button type="button" class="userSetting">Layout</button>
+        <button type="button" class="userSetting">Theme</button>
+      </div>
+    </header>
+    <nav>
+      <button type="button" id="viewProjects" class="navItem" >Projects</button>
+      <button type="button" id="viewApplications" class="navItem" >Applications</button>
+      <button type="button" id="viewEnvironments" class="navItem" >Environments</button>
+      <button type="button" id="viewTestSuites" class="navItem" >Test Suites</button>
+      <button type="button" id="viewTestCases" class="navItem" >Test Cases</button>
+      <button type="button" id="viewTestRuns" class="navItem" >Test Runs</button>
+    </nav>
+    <main>
+      <!-- Replace with dynamic content -->
+      <div id="projects">
+        Put some projects in here.
+      </div>
+      <div id="applications">
+        <table>
+          <tr>
+            <th scope="col">URL</th>
+            <th scope="col">Name</th>
+            <th scope="col">Version</th>
+            <th scope="col">Keywords</th>
+          </tr>
+          <tr>
+            <td><a href="#">https://theguardian.com</a></td>
+            <td>The Guardian</td>
+            <td>1.0.1</td>
+            <td>news, international, reporting</td>
+          </tr>
+          <tr>
+            <td><a href="#">https://arstechnica</td>
+            <td>Ars Technica</td>
+            <td>1.0.0</td>
+            <td>news, technology, tech, computers, electronics</td>
+          </tr>
+          <tr>
+            <td><a href="#">https://statcan.gc.ca/en/start</td>
+            <td>Statistics Canada - English</td>
+            <td>1.0.0</td>
+            <td>statistics, canada, government, agency, policy, data</td>
+          </tr>
+        </table>
+      </div>
+      <div id="environments">
+        Populate with all the main browsers.
+      </div>
+      <div id="testSuites">
+        Produce some test suites in here.
+      </div>
+      <div id="testCases">
+        Produce some test cases in here.
+      </div>
+      <div>
+        Schedule some test runs.
+      </div>
+    </main>
+    <footer>
+      <div id="followUps">
+        <a class="followUp" href="#">Feedback</a>
+        <a class="followUp" href="#">Licenses</a>
+        <a class="followUp" href="#">Documentation</a>
+      </div>
+      <img alt="Alternate flag of Canada" id="foc-alt" src="./images/flag-of-canada-alternate.svg"/>
+    </footer>
+  </body>
+</html>
+
