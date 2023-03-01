@@ -14,13 +14,13 @@ const Main = () => (
         <td>news, international, reporting</td>
       </tr>
       <tr>
-        <td><a href="#">https://arstechnica</td>
+        <td><a href="#">https://arstechnica</a></td>
         <td>Ars Technica</td>
         <td>1.0.0</td>
         <td>news, technology, tech, computers, electronics</td>
       </tr>
       <tr>
-        <td><a href="#">https://statcan.gc.ca/en/start</td>
+        <td><a href="#">https://statcan.gc.ca/en/start</a></td>
         <td>Statistics Canada - English</td>
         <td>1.0.0</td>
         <td>statistics, canada, government, agency, policy, data</td>

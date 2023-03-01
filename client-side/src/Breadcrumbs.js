@@ -6,3 +6,5 @@ const Breadcrumbs = () => (
     <a href="#">ITTC</a>
   </div>
 );
+
+export default Breadcrumbs;

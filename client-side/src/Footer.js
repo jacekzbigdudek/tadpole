@@ -1,11 +1,11 @@
-import FlagOfCanada2 from "../../express/public/images/FlagOfCanadaAlternate.svg";
+import FlagOfCanada from "./FlagOfCanada";
 
 const Footer = () => (
   <div>
     <a href="#">Documentation</a>
     <a href="#">Licenses</a>
     <a href="#">Feedback</a>
-    <FlagOfCanada2/>
+    <FlagOfCanada/>
   </div>
 );
 

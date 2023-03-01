@@ -1,10 +1,10 @@
-import FlagOfCanada1 from "./FlagOfCanada1";
+import FlagOfCanada from "./FlagOfCanada";
 import Breadcrumbs from "./Breadcrumbs";
 import Settings from "./Settings";
 
 const Header = () => (
   <div>
-    <FlagOfCanada1 />
+    <FlagOfCanada />
     <Breadcrumbs />
     <Settings />
   </div>
