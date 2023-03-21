@@ -1,0 +1,1 @@
+I think index.html is the appropriate file onto which to apply the css styling for html and body (the stuff related to viewport background and root font size.)

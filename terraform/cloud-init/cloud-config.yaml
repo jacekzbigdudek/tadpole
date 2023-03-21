@@ -209,7 +209,8 @@ runcmd:
   - git clone https://github.com/jacekzbigdudek/tadpole.git
  
   - cd /home/adminuser/tadpole/express/
-  # Import the required node packages:
+  # Import the required node packages. Using npm ci (instead of npm install)
+  # locks the versions of implicit dependencies in the package-lock.json file.
   - npm ci
 
   # Enable tadpole service unit:

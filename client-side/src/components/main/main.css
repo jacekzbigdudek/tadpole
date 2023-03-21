@@ -1,0 +1,20 @@
+.JSONobject {
+  background-color: pink;
+  border-radius: 0.25rem;
+}
+
+.JSONArray {
+  background-color: skyblue;
+  border-radius: 0.25rem;
+
+}
+
+.JSONstring {
+  background-color: goldenrod;
+  border-radius: 0.25rem;
+}
+
+.JSONnumber {
+  background-color: red;
+  border-radius: 0.25rem;
+}

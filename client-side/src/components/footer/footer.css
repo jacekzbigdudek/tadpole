@@ -1,0 +1,26 @@
+#footer {
+  background-color: aliceblue;
+  padding: 0.5rem;
+  display: block grid;
+  grid-area: footer;
+  grid-template-rows: min-content;
+  grid-template-columns: min-content minmax(2rem, 1fr) min-content;
+  grid-template-areas:
+    "followUps seperator logo";
+}
+
+#followups {
+  display: block flex;
+  grid-area: followUps;
+  justify-self: start;
+  font-size: 1.2rem;
+}
+
+.followup {
+  margin: 0.5rem;
+}
+
+#canadaLogo {
+  height: 2rem;
+  grid-area: logo;
+}

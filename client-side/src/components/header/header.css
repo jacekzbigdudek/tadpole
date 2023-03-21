@@ -1,0 +1,61 @@
+#header {
+  background-color: aliceblue;
+  display: block grid;
+  grid-area: header;
+  grid-template-rows: min-content min-content;
+  grid-template-columns: 4rem auto 2.5rem auto;
+  grid-template-areas:
+    "logo  breadcrumbs separator userSettings"
+    "title title       separator userSettings";
+  padding: 0.5rem;
+}
+
+#foc {
+  height: 2rem;
+  grid-area: logo;
+  margin: 0;
+}
+
+#title {
+  font-size: 2rem;
+  margin: 0;
+  grid-area: title;
+  /*border: 1px solid purple;*/
+  /*background-color: pink;*/
+  /* This property prevents wrapping of text in our title: */
+  white-space: nowrap;
+}
+
+#breadcrumbs {
+  grid-area: breadcrumbs;
+  display: flow;
+  align-content: center;
+  font-size: 1.2rem;
+  white-space: nowrap;
+}
+
+.breadcrumb {
+  text-align: center;
+  font-size: 1rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+#userSettings {
+  margin: 0;
+  display: block grid;
+  grid-template-rows: min-content min-content;
+  grid-template-columns: min-content min-content;
+  grid-template-areas:
+    "language login"
+    "layout   colors";
+  grid-area: userSettings;
+  gap: 0.5rem;
+}
+
+.userSetting {
+  font-family: inherit;
+  font: 1rem sans-serif;
+  background-color: lightsteelblue;
+  border-radius: 0.25rem;
+}

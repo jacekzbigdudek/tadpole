@@ -1,0 +1,44 @@
+#nav {
+  background-color: aliceblue;
+  color: white;
+  margin: 0;
+  padding: 0;
+  grid-area: nav;
+  font-family: sans-serif;
+  font-size: 1.5rem;
+  
+  display: block grid;
+  grid-template-rows: min-content;
+  grid-template-columns: min-content min-content min-content min-content min-content;
+  grid-template-areas: "applications environments testSuites testCases testRuns";
+  justify-content: center;
+  white-space: nowrap;
+}
+
+.navItem {
+  background-color: lightsteelblue;
+  border-radius: 0.1rem;
+  font-family: sans-serif;
+  font-size: 1.35rem;
+}
+
+#navApplications {
+  grid-area: applications;
+}
+
+#navEnvironments {
+  grid-area: environments;
+}
+
+#navTestSuites {
+  grid-area: testSuites;
+}
+
+#navtestCases {
+  grid-area: testCases;
+}
+
+#navtestRuns {
+  grid-area: testRuns;
+}
+
