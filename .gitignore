@@ -1,8 +1,1 @@
-/terraform/.terraform
-/terraform/.terraform.lock.hcl
-/terraform/*.tfstate
-/terraform/*.tfstate.backup                  
-/ssh-keys/*
-/notes.txt
 *.swp
-/express/node_modules

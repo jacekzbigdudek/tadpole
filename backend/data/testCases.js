@@ -106,6 +106,6 @@ const testCases = [
     ],
     "pass_cond": "True if all steps passed, otherwise false."
   }
-]
+];
 
-export default testCases;
+module.exports = testCases;

@@ -1,0 +1,6 @@
+.terraform/
+.terraform.lock.hcl
+ssh-keys/*
+!ssh-keys/note.txt
+*.tfstate
+*.tfstate.backup                  

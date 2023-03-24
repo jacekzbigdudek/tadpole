@@ -39,6 +39,6 @@ const environments = [
       "password": "agent"
     }
   }
-]
+];
 
-export default environments;
+module.exports = environments;

@@ -224,6 +224,6 @@ runcmd:
 power_state:
   timeout: 0
   delay: "now"
-  message: "Rebooting to start mongodb and pa11y."
+  message: "Rebooting to restart systemd services."
   mode: reboot
 

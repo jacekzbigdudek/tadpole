@@ -52,6 +52,6 @@ const applications = [
       "policy"
     ]
   }
-]
+];
 
-export default applications;
+module.exports = applications;
