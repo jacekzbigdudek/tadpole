@@ -1,0 +1,35 @@
+html {
+  /* Set background-color on html because if unset the 
+  background-color of body floods the whole viewport. */
+  background-color: gray;
+  /* Set font-size on html becaues rems (root ems) 
+  refer to root element (html). */
+  font-size: 12pt; 
+}
+
+body {
+  background-color: lightgray; /*navy*/
+  min-height: 100vh;
+  margin: 0;
+
+  display: grid;
+  grid-template-areas: "root";
+  grid-template-rows: min-content;
+  grid-template-columns: min-content;
+  justify-content: center;
+  align-content: center;
+}
+
+#root {
+  grid-area: root;
+  display: block grid;
+  grid-template-rows: min-content min-content 1fr min-content;
+  grid-template-columns: auto;
+  grid-template-areas:
+    "header"
+    "nav"
+    "main"
+    "footer";
+  gap: 0.5rem;
+}
+
