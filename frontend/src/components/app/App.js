@@ -1,10 +1,10 @@
 import "./app.css";
+import axios from "axios";
 import {useState, useEffect} from "react";
 import Header from "../header/Header";
 import Nav from "../nav/Nav";
 import Main from "../main/Main";
 import Footer from "../footer/Footer";
-import axios from "axios";
 
 /* 
 Some things to do in this component:
@@ -23,13 +23,16 @@ Some things to do in this component:
 
 Figure out how to layout your components. 
   What things to do using javascript and what using CSS.
+
+Do we want to use axios still or should we look into the generic Fetch api instead?
 */
 
 const App = () => {
-  console.log("App is rendered.");
   const [data, setData] = useState({});
   const [view, setView] = useState("applications");
   const navButtonClickHandler = str => (() => setView(str));
+
+  /* Move any references to specific ports out to a project config file. */
   const f = vw => axios.get(`http://localhost:3001/${vw}`);
 
   const getData = () => {
