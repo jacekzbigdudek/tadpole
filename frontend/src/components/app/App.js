@@ -30,10 +30,7 @@ Do we want to use axios still or should we look into the generic Fetch api inste
 const App = () => {
   const [data, setData] = useState({});
   const [view, setView] = useState("applications");
-  const navButtonClickHandler = str => (() => setView(str));
-
-  /* Move any references to specific ports out to a project config file. */
-  const f = vw => axios.get(`http://localhost:3000/${vw}`);
+  const f = vw => axios.get(window.location.origin.concat('/', vw)); 
 
   const getData = () => {
     const views = ["applications", "environments", "testCases"];
