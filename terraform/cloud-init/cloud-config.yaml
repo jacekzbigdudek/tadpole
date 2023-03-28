@@ -204,6 +204,9 @@ runcmd:
   - sudo apt-get install -y nodejs
 
   # tadpole:
+  # git repository ownership issue.
+  - sudo git config --global --add safe.directory '/home/adminuser/tadpole'
+
   # Get all our project files by importing the project repo:
   - cd /home/adminuser/
   - git clone https://github.com/jacekzbigdudek/tadpole.git
