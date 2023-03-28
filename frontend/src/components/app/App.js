@@ -33,7 +33,7 @@ const App = () => {
   const navButtonClickHandler = str => (() => setView(str));
 
   /* Move any references to specific ports out to a project config file. */
-  const f = vw => axios.get(`http://localhost:3001/${vw}`);
+  const f = vw => axios.get(`http://localhost:3000/${vw}`);
 
   const getData = () => {
     const views = ["applications", "environments", "testCases"];

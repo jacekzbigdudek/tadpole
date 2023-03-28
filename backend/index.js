@@ -15,7 +15,7 @@ Register middleware for handling requests for static content
 and for cross-origin resource sharing. 
 */
 app.use(cors());
-app.use(express.static("./build"));
+app.use(express.static("build"));
 
 /* Register route handlers for collections and individual items. */
 /* Isn't this one conflicting with our static main page though? */
