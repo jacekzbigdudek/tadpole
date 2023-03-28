@@ -57,7 +57,7 @@ app.get("/testCases/:uuid", (request, response) => {
 Activate web server after setup.
 We should move the port specification out to a configuration file.
 */
-const PORT = 3001;
+const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}.`);
 });

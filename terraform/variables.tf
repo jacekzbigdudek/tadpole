@@ -20,7 +20,7 @@ variable "location" {
 
 variable "public_key_file_name" {
     description = "Public key to use when provisioning the vm."
-    default = "../ssh-keys/tadpole-web-server-vm-key.pub"
+    default = "./ssh-keys/tadpole-web-server-vm-key.pub"
 }
 
 variable "user_data" {

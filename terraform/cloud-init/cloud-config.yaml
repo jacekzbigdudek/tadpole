@@ -129,8 +129,6 @@ write_files:
           bindIp: localhost
           port: 27017
 
-
-
   # tadpole systemd service unit definition:
   - path: /etc/systemd/system/tadpole.service
     content: |
@@ -139,9 +137,6 @@ write_files:
       After=mongodb.service
 
       [Service]
-
-      #MAKE SURE THIS UPDATE WORKS:
-      #ExecStart=/usr/bin/node /home/adminuser/tadpole/express/bin/www
       ExecStart=/usr/bin/node /home/adminuser/tadpole/backend/index.js
 
       Restart=on-failure
@@ -149,8 +144,6 @@ write_files:
 
       [Install]
       WantedBy=multi-user.target
-
-
 
   # nginx configuration file for tadpole. 
   # It would be better to have these values (domain and local server address) provided as external variables.
@@ -210,14 +203,15 @@ runcmd:
   # Using -y option to respond with 'yes' to any prompts.
   - sudo apt-get install -y nodejs
 
-
   # tadpole:
   # Get all our project files by importing the project repo:
   - cd /home/adminuser/
   - git clone https://github.com/jacekzbigdudek/tadpole.git
 
-  # Need to checkout the feature branch during development:
-  - git checkout -B react
+  # Need to checkout the remote feature branch (because it is not yet merged with main):
+  - git checkout origin/react
+  # Create local tracking branch:
+  - git checkout react
 
   # Import the required node packages. Using npm ci (instead of npm install)
   # locks the versions of implicit dependencies in the package-lock.json file.
@@ -229,16 +223,13 @@ runcmd:
   # Build production version of the front-end index page and copy to back-end's directory for static content: 
   - cd /home/adminuser/tadpole/frontend
   - npm run build
-  - sudo cp -r build /home/adminuser/tadpole/backend/
+  - cp -r build /home/adminuser/tadpole/backend/
 
   # Enable tadpole service unit:
   - sudo systemctl enable tadpole.service
 
   # Create a symbolic link to nginx site config file for tadpole:
   - sudo ln -s /etc/nginx/sites-available/itpd-tadpole.eastus.cloudapp.azure.com /etc/nginx/sites-enabled/
-
-
-
 
 # Reboot computer to start new systemd service units without race conditions.
 power_state:
